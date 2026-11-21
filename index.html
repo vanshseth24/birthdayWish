@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Khushi ❤️</title>
+<body>
+  <audio controls autoplay loop display="none">
+    <source src="bdaySong.mp3" type="audio/mpeg">
+     <source src="bdaySong.mp3" type="audio/wav">
+  </audio>
+</body>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff4d6d;
+    --rose: #c9184a;
+    --blush: #fff0f3;
+    --deep: #590d22;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(ellipse at top, #ffe5ec 0%, #ffc2d1 40%, #ff8fab 100%);
+    overflow-x: hidden;
+    color: var(--deep);
+  }
+  .font-script { font-family: 'Dancing Script', cursive; }
+  .font-serif { font-family: 'Playfair Display', serif; }
+
+  /* Floating hearts background */
+  .hearts-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .hearts-bg span {
+    position: absolute; bottom: -60px; opacity: 0;
+    animation: floatUp linear infinite;
+    filter: drop-shadow(0 4px 6px rgba(201,24,74,.25));
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg) scale(.6); opacity: 0; }
+    10% { opacity: .7; }
+    90% { opacity: .7; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(1.1); opacity: 0; }
+  }
+
+  /* Pages */
+  .page { display: none; position: relative; z-index: 2; min-height: 100vh; }
+  .page.active { display: flex; animation: fadeIn .7s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px);} to { opacity:1; transform: translateY(0);} }
+
+  .card {
+    background: rgba(255,255,255,.78);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.6);
+    box-shadow: 0 20px 60px rgba(201,24,74,.18);
+  }
+
+  /* Bow */
+  #bowWrap { position: relative; width: 100%; max-width: 920px; height: 440px; margin: 0 auto; }
+  #bowSvg { position: absolute; left: 30px; top: 60px; }
+  #heartTarget {
+    position: absolute; right: 90px; top: 150px; width: 130px; height: 130px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 110px; line-height: 1; user-select: none;
+    transition: transform .2s;
+    filter: drop-shadow(0 8px 18px rgba(201,24,74,.35));
+  }
+  #heartTarget.burst { animation: burst .6s ease forwards; }
+  @keyframes burst {
+    0% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(1.5); opacity: .9; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+  #arrow {
+    position: absolute; width: 52px; height: 14px; pointer-events: none;
+    transform-origin: left center; display: none;
+  }
+  #arrow.show { display: block; }
+  .arrow-shaft { position: absolute; left: 8px; top: 6px; width: 34px; height: 2px; background: #5a3825; }
+  .arrow-head { position: absolute; right: 0; top: 0; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 12px solid #5a3825; }
+  .arrow-feather { position: absolute; left: 0; top: 2px; width: 10px; height: 10px; background: #ff4d6d; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+
+  /* Hearts pop game */
+  .pop-heart {
+    font-size: 96px; cursor: pointer; user-select: none; transition: transform .15s;
+    filter: drop-shadow(0 6px 14px rgba(201,24,74,.3));
+  }
+  .pop-heart:hover { transform: scale(1.12); }
+  .pop-heart.popped { animation: pop .45s ease forwards; pointer-events: none; }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.4); }
+    100% { transform: scale(0); opacity: 0; }
+  }
+  .note-card {
+    max-height: 0; overflow: hidden; opacity: 0; transition: all .5s ease;
+    background: linear-gradient(135deg,#fff0f3,#ffe5ec);
+    border-left: 4px solid var(--pink);
+  }
+  .note-card.revealed { max-height: 200px; opacity: 1; padding: 14px 16px; margin-top: 10px; }
+
+  /* Envelope / letter */
+  .envelope {
+    width: 320px; height: 210px; position: relative; cursor: pointer;
+    background: #fde2e4; border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(201,24,74,.25);
+    transition: transform .3s;
+  }
+  .envelope:hover { transform: translateY(-6px); }
+  .envelope .flap {
+    position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+    background: #f9c6cc; clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top; transition: transform .7s ease;
+    z-index: 3;
+  }
+  .envelope.open .flap { transform: rotateX(180deg); }
+  .envelope .body { position: absolute; bottom: 0; width: 100%; height: 50%; background: #fde2e4; border-radius: 0 0 6px 6px; }
+  .envelope .heart-seal {
+    position: absolute; top: 42%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 34px; z-index: 4; transition: opacity .3s;
+  }
+  .envelope.open .heart-seal { opacity: 0; }
+  .letter {
+    max-height: 0; overflow: hidden; opacity: 0; transition: all .8s ease;
+    background: #fffaf0; border: 1px solid #f3d9b1;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  }
+  .letter.open { max-height: 900px; opacity: 1; padding: 28px 32px; margin-top: 24px; }
+
+  .btn {
+    background: linear-gradient(135deg, var(--pink), var(--rose));
+    color: white; padding: 12px 28px; border-radius: 999px; font-weight: 600;
+    box-shadow: 0 8px 20px rgba(201,24,74,.35); transition: transform .2s, box-shadow .2s;
+    border: none; cursor: pointer;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(201,24,74,.45); }
+
+  .photo-frame {
+    padding: 14px; background: white; border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(201,24,74,.25);
+    transform: rotate(-2deg);
+  }
+  .photo-frame img { border-radius: 12px; width: 100%; height: 420px; object-fit: cover; display: block; }
+
+  @media (max-width: 640px) {
+    #bowWrap { height: 360px; }
+    #heartTarget { right: 20px; top: 130px; font-size: 80px; width: 90px; height: 90px; }
+    .photo-frame img { height: 320px; }
+    .envelope { width: 280px; height: 180px; }
+  }
+</style>
+</head>
+<body>
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- PAGE 1 -->
+  <section id="page1" class="page active items-center justify-center px-4 py-10">
+    <div class="w-full max-w-5xl text-center">
+      <p class="font-script text-3xl md:text-4xl text-rose-700 mb-2">Happy Birthday, Khushi 🎂</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-rose-800 mb-2">Aim for my heart 💘</h1>
+      <p class="text-rose-700/80 mb-6">Pull the bowstring back and release to shoot the arrow at the heart</p>
+      <div id="bowWrap">
+        <svg id="bowSvg" width="170" height="320" viewBox="0 0 170 320">
+          <path d="M 55 25 Q 175 160 55 295" stroke="#6b3f1d" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <line id="strTop" x1="55" y1="25" x2="55" y2="160" stroke="#fff" stroke-width="2"/>
+          <line id="strBot" x1="55" y1="160" x2="55" y2="295" stroke="#fff" stroke-width="2"/>
+          <circle id="handle" cx="55" cy="160" r="14" fill="#ff4d6d" stroke="#fff" stroke-width="3" style="cursor:grab"/>
+        </svg>
+        <div id="heartTarget">❤️</div>
+        <div id="arrow">
+          <div class="arrow-feather"></div>
+          <div class="arrow-shaft"></div>
+          <div class="arrow-head"></div>
+        </div>
+      </div>
+      <p id="hint" class="text-rose-600/70 text-sm mt-4">Drag the red handle to the left, then release 🏹</p>
+    </div>
+  </section>
+
+  <!-- PAGE 2 -->
+  <section id="page2" class="page items-center justify-center px-4 py-10">
+    <div class="w-full max-w-3xl text-center">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-rose-800 mb-2">Pop the hearts 💌</h1>
+      <p class="text-rose-700/80 mb-8">Tap each heart to reveal a little note from me</p>
+      <div class="flex justify-center gap-6 md:gap-10 flex-wrap mb-6">
+        <div class="flex flex-col items-center w-44">
+          <div class="pop-heart" data-idx="0">❤️</div>
+          <div class="note-card w-full rounded-lg text-left text-rose-800" id="note0"></div>
+        </div>
+        <div class="flex flex-col items-center w-44">
+          <div class="pop-heart" data-idx="1">💖</div>
+          <div class="note-card w-full rounded-lg text-left text-rose-800" id="note1"></div>
+        </div>
+        <div class="flex flex-col items-center w-44">
+          <div class="pop-heart" data-idx="2">💕</div>
+          <div class="note-card w-full rounded-lg text-left text-rose-800" id="note2"></div>
+        </div>
+      </div>
+      <div id="continue2" class="hidden mt-6">
+        <button class="btn" onclick="showPage(3)">Go for next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3 -->
+  <section id="page3" class="page items-center justify-center px-4 py-10">
+    <div class="w-full max-w-4xl text-center">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-rose-800 mb-2">My beautiful Khushi 🌸</h1>
+      <p class="text-rose-700/80 mb-8">The most beautiful girl in my world</p>
+      <div class="photo-frame mx-auto max-w-sm">
+        <img src="picK.jpg" alt="Khushi" />
+      </div>
+      <p class="font-script text-2xl md:text-3xl text-rose-700 mt-8">You are my everything. Happy Birthday, my love. 🎂❤️</p>
+      <div class="mt-8">
+        <button class="btn" onclick="showPage(4)">Read my letter →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 4 -->
+  <section id="page4" class="page items-center justify-center px-4 py-10">
+    <div class="w-full max-w-3xl text-center">
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-rose-800 mb-2">A letter for you 💌</h1>
+      <p class="text-rose-700/80 mb-8">Tap the envelope to open it</p>
+      <div class="flex justify-center">
+        <div class="envelope" id="envelope" onclick="openLetter()">
+          <div class="flap"></div>
+          <div class="body"></div>
+          <div class="heart-seal">❤️</div>
+        </div>
+      </div>
+      <div class="letter mx-auto max-w-2xl text-left" id="letter">
+        <p class="font-script text-2xl text-rose-700 mb-4">My dearest Khushi,</p>
+        <p class="leading-relaxed text-rose-900/90 mb-3">Happy Birthday, my love! 🎂 On this special day, I want you to know how much you mean to me. You are the most beautiful person, inside and out, and I feel so lucky to have you in my life.</p>
+        <p class="leading-relaxed text-rose-900/90 mb-3">Every moment with you is a treasure. Your smile lights up my world, your laugh is my favorite sound, and your love is my greatest gift. You make ordinary days feel magical.</p>
+        <p class="leading-relaxed text-rose-900/90 mb-3">I know we are in long distance but i promise to always be there for you — to make you smile, to hold your hand through everything, and to love you more with each passing day.</p>
+        <p class="leading-relaxed text-rose-900/90 mb-6">May all your dreams come true, today and always. Happy 22nd November, my Khushi. 🌹</p>
+        <p class="font-script text-2xl text-rose-700">Forever yours,</p>
+        <p class="font-script text-3xl text-rose-800 font-bold">Vansh ❤️</p>
+      </div>
+      <div id="replay" class="hidden mt-8">
+        <button class="btn" onclick="showPage(1)">Replay from start ↺</button>
+      </div>
+    </div>
+  </section>
+
+<script>
+  // Floating hearts background
+  (function(){
+    const bg = document.getElementById('heartsBg');
+    const hearts = ['❤️','💖','💕','💗','💘','💝','💞'];
+    for(let i=0;i<26;i++){
+      const s = document.createElement('span');
+      s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+      s.style.left = Math.random()*100 + 'vw';
+      s.style.fontSize = (14 + Math.random()*26) + 'px';
+      s.style.animationDuration = (8 + Math.random()*10) + 's';
+      s.style.animationDelay = (Math.random()*12) + 's';
+      bg.appendChild(s);
+    }
+  })();
+
+  const notes = [
+    "From the moment I met you, my world became brighter. You are my sunshine, Khushi. 💛",
+    "Every day with you feels like a beautiful dream I never want to wake up from. 🌹",
+    "On your birthday, I wish you all the happiness in the world. You deserve everything, my love. 🎂❤️"
+  ];
+  notes.forEach((n,i)=>{ document.getElementById('note'+i).textContent = n; });
+
+  function showPage(n){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+n).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    if(n===1) resetBow();
+  }
+
+  // ---------- BOW & ARROW ----------
+  const bowSvg = document.getElementById('bowSvg');
+  const handle = document.getElementById('handle');
+  const strTop = document.getElementById('strTop');
+  const strBot = document.getElementById('strBot');
+  const heartTarget = document.getElementById('heartTarget');
+  const arrow = document.getElementById('arrow');
+  const bowWrap = document.getElementById('bowWrap');
+
+  let dragging = false;
+  let pullX = 55; // rest position (aligned with tips)
+  const MIN_X = 12;
+
+  function setPull(x){
+    pullX = Math.max(MIN_X, Math.min(55, x));
+    handle.setAttribute('cx', pullX);
+    strTop.setAttribute('x2', pullX);
+    strBot.setAttribute('x1', pullX);
+  }
+
+  function resetBow(){
+    dragging = false;
+    setPull(55);
+    arrow.classList.remove('show');
+    arrow.style.transition = 'none';
+    heartTarget.classList.remove('burst');
+    heartTarget.style.opacity = '1';
+    heartTarget.style.transform = 'scale(1)';
+  }
+
+  function getSvgX(clientX){
+    const rect = bowSvg.getBoundingClientRect();
+    return (clientX - rect.left) * (170/rect.width);
+  }
+
+  handle.addEventListener('mousedown', (e)=>{ dragging=true; handle.style.cursor='grabbing'; e.preventDefault(); });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    setPull(getSvgX(e.clientX));
+  });
+  window.addEventListener('mouseup', ()=>{
+    if(!dragging) return;
+    dragging=false;
+    handle.style.cursor='grab';
+    fireArrow();
+  });
+
+  // touch support
+  handle.addEventListener('touchstart', (e)=>{ dragging=true; e.preventDefault(); }, {passive:false});
+  window.addEventListener('touchmove', (e)=>{
+    if(!dragging) return;
+    setPull(getSvgX(e.touches[0].clientX));
+  }, {passive:false});
+  window.addEventListener('touchend', ()=>{
+    if(!dragging) return;
+    dragging=false;
+    fireArrow();
+  });
+
+  function fireArrow(){
+    const power = (55 - pullX) / (55 - MIN_X); // 0..1
+    // reset pull visual
+    setPull(55);
+    if(power < 0.15){
+      // too weak, no shot
+      return;
+    }
+    const wrapRect = bowWrap.getBoundingClientRect();
+    const handleRect = handle.getBoundingClientRect();
+    const heartRect = heartTarget.getBoundingClientRect();
+
+    arrow.style.transition = 'none';
+    arrow.style.left = (handleRect.left - wrapRect.left) + 'px';
+    arrow.style.top = (handleRect.top - wrapRect.top - 7) + 'px';
+    arrow.classList.add('show');
+
+    // force reflow
+    void arrow.offsetWidth;
+
+    const targetX = (heartRect.left - wrapRect.left) + heartRect.width/2 - 26;
+    const targetY = (heartRect.top - wrapRect.top) + heartRect.height/2 - 7;
+
+    arrow.style.transition = 'left 0.45s cubic-bezier(.4,0,.2,1), top 0.45s cubic-bezier(.4,0,.2,1)';
+    arrow.style.left = targetX + 'px';
+    arrow.style.top = targetY + 'px';
+
+    setTimeout(()=>{
+      heartTarget.classList.add('burst');
+      arrow.classList.remove('show');
+      setTimeout(()=>{ showPage(2); }, 700);
+    }, 470);
+  }
+
+  // ---------- POP HEARTS ----------
+  let poppedCount = 0;
+  document.querySelectorAll('.pop-heart').forEach(h=>{
+    h.addEventListener('click', ()=>{
+      if(h.classList.contains('popped')) return;
+      h.classList.add('popped');
+      const idx = h.dataset.idx;
+      const card = document.getElementById('note'+idx);
+      card.classList.add('revealed');
+      poppedCount++;
+      if(poppedCount === 3){
+        setTimeout(()=>{ document.getElementById('continue2').classList.remove('hidden'); }, 400);
+      }
+    });
+  });
+
+  // ---------- LETTER ----------
+  function openLetter(){
+    const env = document.getElementById('envelope');
+    if(env.classList.contains('open')) return;
+    env.classList.add('open');
+    setTimeout(()=>{ document.getElementById('letter').classList.add('open'); }, 500);
+    setTimeout(()=>{ document.getElementById('replay').classList.remove('hidden'); }, 1100);
+  }
+
+  // expose
+  window.showPage = showPage;
+  window.openLetter = openLetter;
+</script>
+</body>
+</html>
